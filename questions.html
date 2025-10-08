@@ -1515,10 +1515,35 @@
 
             let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
             let ticking = false;
+            let navHold = false;
+
+            const dropdowns = nav.querySelectorAll('.nav-dropdown');
+            dropdowns.forEach((dropdown) => {
+                const holdOn = () => {
+                    navHold = true;
+                    nav.classList.remove('nav-hidden');
+                };
+                const releaseHold = (event) => {
+                    if (event && event.relatedTarget && dropdown.contains(event.relatedTarget)) return;
+                    navHold = false;
+                };
+
+                dropdown.addEventListener('mouseenter', holdOn);
+                dropdown.addEventListener('mouseleave', releaseHold);
+                dropdown.addEventListener('focusin', holdOn);
+                dropdown.addEventListener('focusout', releaseHold);
+            });
 
             function updateVisibility() {
                 const current = window.pageYOffset || document.documentElement.scrollTop;
                 const delta = current - lastScroll;
+
+                if (navHold) {
+                    nav.classList.remove('nav-hidden');
+                    lastScroll = current;
+                    ticking = false;
+                    return;
+                }
 
                 if (current > 120 && delta > 6) {
                     nav.classList.add('nav-hidden');
