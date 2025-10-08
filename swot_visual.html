@@ -42,6 +42,13 @@
             position: sticky;
             top: 24px;
             z-index: 200;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .top-nav.nav-hidden {
+            transform: translateY(-24px);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .nav-brand {
@@ -611,5 +618,35 @@
             </div>
         </div>
     </div>
+    <script>
+        (function () {
+            const nav = document.querySelector('.top-nav');
+            if (!nav) return;
+
+            let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
+            let ticking = false;
+
+            function updateVisibility() {
+                const current = window.pageYOffset || document.documentElement.scrollTop;
+                const delta = current - lastScroll;
+
+                if (current > 120 && delta > 6) {
+                    nav.classList.add('nav-hidden');
+                } else if (delta < -6 || current <= 120) {
+                    nav.classList.remove('nav-hidden');
+                }
+
+                lastScroll = current;
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateVisibility);
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
+    </script>
 </body>
 </html>
