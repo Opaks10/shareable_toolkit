@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions Library - Wealthfront</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent-emerald: #22c55e;
+            --accent-teal: #0f766e;
+            --accent-soft: rgba(34, 197, 94, 0.15);
+            --text-primary: #0f172a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #f8fbff 0%, #f1f4f8 45%, #e3e7ee 100%);
+            padding: 40px 40px 80px;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 18px 32px;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            position: sticky;
+            top: 24px;
+            z-index: 200;
+        }
+
+        .nav-brand {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #111827;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-links a,
+        .nav-dropdown button {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: background 0.3s ease, color 0.3s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-links a:hover,
+        .nav-dropdown button:hover,
+        .nav-links a:focus,
+        .nav-dropdown button:focus {
+            background: rgba(34, 197, 94, 0.15);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 10px 0;
+            display: none;
+            flex-direction: column;
+            min-width: 190px;
+            z-index: 400;
+        }
+
+        .dropdown-menu a {
+            padding: 9px 18px;
+            color: #1f2937;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background: rgba(34, 197, 94, 0.12);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown:focus-within .dropdown-menu {
+            display: flex;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(247,249,255,0.98) 70%, rgba(241,245,252,0.95) 100%);
+            border-radius: 28px;
+            padding: 48px 45px;
+            box-shadow: 0 32px 75px rgba(15, 23, 42, 0.14);
+            border: 1px solid rgba(180, 190, 205, 0.28);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-size: 2.6em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #4b5563;
+            margin-bottom: 30px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .question-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .tab-link {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.06);
+            color: #1f2937;
+            font-weight: 600;
+            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .tab-link:hover,
+        .tab-link:focus {
+            background: rgba(34, 197, 94, 0.15);
+            color: #0f766e;
+            border-color: rgba(34, 197, 94, 0.25);
+            outline: none;
+            box-shadow: 0 8px 18px rgba(34, 197, 94, 0.18);
+        }
+
+        .question-section {
+            margin-bottom: 60px;
+        }
+
+        .question-title {
+            font-size: 1.9em;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .question-intro {
+            color: #4b5563;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .phase {
+            margin-bottom: 45px;
+        }
+
+        .phase-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6em;
+            color: #0f766e;
+            margin-bottom: 25px;
+        }
+
+        .section-card {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 28px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .placeholder-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-card h2 {
+            font-size: 1.5em;
+            color: #0f766e;
+            margin-bottom: 18px;
+        }
+
+        .section-card h3 {
+            font-size: 1.2em;
+            color: #1f2937;
+            margin: 18px 0 12px;
+        }
+
+        .section-card.accent-strength::before,
+        .section-card.accent-weakness::before,
+        .section-card.accent-opportunity::before,
+        .section-card.accent-threat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .section-card.accent-strength::before {
+            background: linear-gradient(90deg, #22c55e 0%, #15803d 100%);
+        }
+
+        .section-card.accent-weakness::before {
+            background: linear-gradient(90deg, #fef3c7 0%, #f59e0b 100%);
+        }
+
+        .section-card.accent-opportunity::before {
+            background: linear-gradient(90deg, #bfdbfe 0%, #3b82f6 100%);
+        }
+
+        .section-card.accent-threat::before {
+            background: linear-gradient(90deg, #fecaca 0%, #f87171 100%);
+        }
+
+        .list-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .list-grid.two-col {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .list-item {
+            background: white;
+            border-radius: 14px;
+            padding: 16px 18px;
+            border-left: 5px solid #16a34a;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        .list-item strong {
+            display: block;
+            font-size: 1em;
+            color: #1f2937;
+            margin-bottom: 6px;
+        }
+
+        .list-item span {
+            color: #4b5563;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .insight-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
+        .insight-card h4 {
+            font-size: 1em;
+            color: #0f172a;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .insight-card p {
+            font-size: 0.9em;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .checklist {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 28px;
+            color: #42526b;
+            line-height: 1.6;
+        }
+
+        .checklist li::before {
+            content: '•';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            color: #16a34a;
+            font-size: 1.4em;
+            line-height: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .badge-success { background: #ecfdf5; color: #047857; }
+        .badge-danger { background: #fef2f2; color: #b91c1c; }
+        .badge-primary { background: #ecfdf5; color: #047857; }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .cta-row a {
+            text-decoration: none;
+            background: linear-gradient(135deg, #22c55e 0%, #0f766e 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 14px 32px rgba(15, 118, 110, 0.22);
+        }
+
+        .cta-row a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 48px rgba(15, 118, 110, 0.28);
+            background: linear-gradient(135deg, #16a34a 0%, #115e59 100%);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 18px;
+            font-size: 0.95em;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            text-align: left;
+            background: white;
+        }
+
+        .table th {
+            background: #f1f5f9;
+            color: #1f2937;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .impact-highlight {
+            background: #fefce8;
+            border-left: 5px solid #f59e0b;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-top: 18px;
+            color: #854d0e;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-top: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            color: #1f2937;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .quote-block span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: #64748b;
+            font-style: normal;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 20px 60px;
+            }
+
+            .container {
+                padding: 30px 22px;
+            }
+
+            .phase-title {
+                font-size: 1.6em;
+            }
+
+            .section-card {
+                padding: 24px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">Wealthfront Toolkit</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <div class="nav-dropdown">
+                <button type="button">Questions ▾</button>
+                <div class="dropdown-menu">
+                    <a href="questions.html#q7">Question 7</a>
+                    <a href="questions.html#q8">Question 8</a>
+                    <a href="questions.html#q13">Question 13</a>
+                    <a href="questions.html#q14">Question 14</a>
+                    <a href="questions.html#q15">Question 15</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button type="button">Tools ▾</button>
+                <div class="dropdown-menu">
+                    <a href="tools.html">Overview</a>
+                    <a href="bmc_visual.html">Business Model Canvas</a>
+                    <a href="swot_visual.html">SWOT Analysis</a>
+                    <a href="customer_journey_visual.html">Customer Journey Map</a>
+                    <a href="vpc_visual.html">Value Proposition Canvas</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Strategic Questions</h1>
+        <p class="subtitle">
+            Explore curated answers to key Wealthfront strategy questions. Use the tabs below to jump to each response
+            and access supporting deliverables right when they add the most value.
+        </p>
+
+        <div class="question-tabs">
+            <a class="tab-link" href="#q7">Question 7</a>
+            <a class="tab-link" href="#q8">Question 8</a>
+            <a class="tab-link" href="#q13">Question 13</a>
+            <a class="tab-link" href="#q14">Question 14</a>
+            <a class="tab-link" href="#q15">Question 15</a>
+        </div>
+
+        <section class="question-section" id="q7">
+            <h2 class="question-title">Question 7 — Should Wealthfront adopt a hybrid advisory model?</h2>
+            <p class="question-intro">
+                Wealthfront was engineered as a fully automated robo-advisor to keep fees ultra-low, remain radically transparent,
+                and resonate with millennial investors who distrust sales-driven advisors. As the market shifts toward hybrid models,
+                the debate centers on whether introducing humans strengthens the franchise or dilutes everything that makes
+                Wealthfront distinctive.
+            </p>
+
+            <div class="section-card accent-strength">
+                <h2>Why the 100% digital stance worked</h2>
+                <div class="insight-grid">
+                    <div class="insight-card">
+                        <h4>💸 Cost Advantage</h4>
+                        <p>Automating advice delivered a 0.25% fee vs. the ~1% industry norm, creating a 4× pricing advantage without
+                        sacrificing quality.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>🔍 Radical Transparency</h4>
+                        <p>Software-driven portfolios and automated rebalancing removed opaque incentives, reinforcing trust with
+                        DIY-averse but tech-confident investors.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>🧑‍💻 Millennial Fit</h4>
+                        <p>Digital natives preferred unbiased automation over human salesmanship, enabling Wealthfront to capture
+                        the “delegate to software” generation.</p>
+                    </div>
+                </div>
+                <p style="font-size:0.9em; color:#4b5563; margin-top:12px;">
+                    By 2014, rivals began layering human advisors onto digital platforms. Assessing whether Wealthfront should
+                    follow requires weighing the benefits of human touch against the cultural and economic cost of abandoning
+                    a pure-software ethos.
+                </p>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>Arguments for adding a hybrid layer</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Strategic lever</th>
+                            <th>Insight</th>
+                            <th>Value for clients & business</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Complex life events</td>
+                            <td>Marriage, home purchases, inheritance, and tax planning demand empathy and multi-factor judgement.</td>
+                            <td>Sustains loyalty as customers’ financial lives evolve.</td>
+                        </tr>
+                        <tr>
+                            <td>New revenue pools</td>
+                            <td>RIA market &gt; $2T AUM; Wealthfront tech could be licensed via white-label / B2B2C partnerships.</td>
+                            <td>Creates diversification without abandoning automation capabilities.</td>
+                        </tr>
+                        <tr>
+                            <td>Trust reinforcement</td>
+                            <td>Even digital-first investors sometimes seek reassurance before high-stakes decisions.</td>
+                            <td>Reduces churn and increases perceived safety and personalization.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-card accent-threat">
+                <h2>Arguments against a hybrid pivot</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Risk</th>
+                            <th>Implication</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Brand dilution</td>
+                            <td>“No salesperson, no conflict” is central to the brand; adding humans weakens that promise.</td>
+                            <td>Erodes differentiation vs. incumbents and confuses positioning.</td>
+                        </tr>
+                        <tr>
+                            <td>Economics & scale</td>
+                            <td>Human advisors add fixed costs (hiring, compliance, QA) and reduce SaaS-like margins.</td>
+                            <td>Undermines the scalable software model that powers profitability.</td>
+                        </tr>
+                        <tr>
+                            <td>Generational expectations</td>
+                            <td>Under-35 investors trust algorithms over humans for financial management.</td>
+                            <td>Hybrid could feel like regression to a sales-led experience.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-card accent-strength">
+                <h2>Recommended path: digital-first, human-enhanced</h2>
+                <ul class="checklist">
+                    <li>Invest in conversational AI and behavioral coaching to deliver empathetic, contextual guidance at scale.</li>
+                    <li>Deploy an AI Wealth Coach (see Question 15) as the primary “human layer” for day-to-day advice.</li>
+                    <li>Offer curated access to specialists (tax, estate, complex planning) only for infrequent, high-impact needs.</li>
+                </ul>
+                <div class="impact-highlight" style="margin-top:24px;">
+                    Outcome: Wealthfront remains true to its autonomous DNA while satisfying the desire for reassurance and nuanced
+                    judgement—without incurring the cost structure or cultural drift of a fully staffed advisory arm.
+                </div>
+                <div class="quote-block">
+                    “Millennials like the idea that software is working for them 24/7. For the under-35 cohort, handing delegation
+                    to rational, transparent software is more trustworthy than to a salesperson.”
+                    <span>Wealthfront leadership perspective (2014)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="question-section" id="q8">
+            <h2 class="question-title">Question 8 — How effective was Wealthfront's client onboarding and acquisition strategy?</h2>
+            <p class="question-intro">
+                Wealthfront engineered a viral, software-first growth engine that took assets under management from $97M to $1.5B in
+                under two years. Effectiveness was undeniable for tech-savvy millennials, yet tightly bound to that context. The
+                Customer Journey Map highlights where the strategy excelled at every stage.
+            </p>
+
+            <div class="section-card accent-strength">
+                <h2>Headline Outcomes</h2>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>Explosive AUM growth</strong>
+                        <span>$97M → $1.5B (+15×) between late 2012 and 2014, fuelled by product-led acquisition.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Organic dominance</strong>
+                        <span>80%+ of new clients arrived via organic or referral channels, driving near-zero CAC.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Referral conversion</strong>
+                        <span>1 in 8 referrals converted (12.5%), unprecedented in financial services at the time.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Conversion lift</strong>
+                        <span>Visitor-to-client conversion increased 78% as education-first content and automation aligned with user trust.</span>
+                    </div>
+                </div>
+                <div class="cta-row">
+                    <a href="customer_journey_visual.html">View Journey Map</a>
+                    <a href="tools.html">Explore All Tools</a>
+                </div>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>Acquisition Strategy Effectiveness</h2>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>Low-cost viral loop</strong>
+                        <span>Freemium tier: first $25K managed free; referral bonus +$5K per friend for both parties created a compounding network effect aligned with millennial word-of-mouth behaviour.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Credibility via education</strong>
+                        <span>No sales pitches—only seminars, white papers, and data-rich blog posts presented by trusted “investment influencers” inside target companies, matching the audience’s skepticism of Wall Street.</span>
+                    </div>
+                </div>
+                <div class="impact-highlight" style="margin-top:18px;">
+                    Acquisition fit: 95% of millennials cited friends as the most credible source. Wealthfront’s referral flywheel and
+                    educational positioning translated that insight into efficient top-of-funnel growth.
+                </div>
+            </div>
+
+            <div class="section-card accent-weakness">
+                <h2>Onboarding & Early Experience</h2>
+                <ul class="checklist">
+                    <li><strong>Digital end-to-end:</strong> Fully automated account opening across web and mobile; no human contact required.</li>
+                    <li><strong>Lower barrier to entry:</strong> $5K minimum vs. $100K+ at incumbents invited mass affluent millennials into sophisticated wealth management.</li>
+                    <li><strong>Transparent methodology:</strong> Portfolios, tax-loss harvesting, and rebalancing rules explained in plain language, reinforcing algorithmic trust.</li>
+                    <li><strong>Proof of trust:</strong> Clients opened accounts as large as $3.7M without phone contact; by Oct 2014 Wealthfront served 14K clients with average balances rising from $40K to $90K.</li>
+                </ul>
+            </div>
+
+            <div class="section-card accent-threat">
+                <h2>Why It Worked — and the Constraints</h2>
+                <div class="insight-grid">
+                    <div class="insight-card">
+                        <h4>🧠 Generational fit</h4>
+                        <p>Millennials preferred software delegation to perceived conflicted advisors. Wealthfront’s tone and UX mirrored their expectations.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>⚙️ Operating leverage</h4>
+                        <p>Automation and referrals let the company scale without heavy sales spend, keeping unit economics attractive.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>🎯 Context dependent</h4>
+                        <p>Strategy optimised for tech employees; effectiveness may drop with segments craving hybrid or high-touch advice.</p>
+                    </div>
+                </div>
+                <div class="impact-highlight" style="margin-top:22px;">
+                    Conclusion: Wealthfront’s acquisition + onboarding engine was exceptionally effective for capital-efficient millennial
+                    growth. Scaling beyond that persona requires layering new trust signals or hybrid support without losing the
+                    software-first edge.
+                </div>
+            </div>
+        </section>
+
+        <section class="question-section" id="q13">
+            <h2 class="question-title">Question 13</h2>
+            <p class="question-intro">
+                Strategy Lab simulation: Wealthfront responds to a zero-fee, gamified, AI-led competitor. Each leadership role presents a
+                countermeasure; teams negotiate, stress-test trade-offs, and converge on a company-wide evolution of the Business Model Canvas.
+            </p>
+            <div class="section-card accent-threat">
+                <h2>Scenario Threats (PESTEL & SWOT Highlights)</h2>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>Political & Legal</strong>
+                        <span>SEC scrutiny of AI advice, EU AI Act, data privacy regulation.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Economic</strong>
+                        <span>Zero-fee challengers trigger price compression; need premium value.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Social</strong>
+                        <span>Gen Z influenced by TikTok finance, meme investing, desire for gamification.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Technological</strong>
+                        <span>Competitors tout AI wealth coaches, crypto robo portfolios, predictive experiences.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Environmental</strong>
+                        <span>Climate risk preferences demand responsible investing narratives.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Legal/Compliance</strong>
+                        <span>Explainability, algorithmic transparency, suitability standards remain critical.</span>
+                    </div>
+                </div>
+                <div class="impact-highlight" style="margin-top:20px;">
+                    SWOT Snapshot: Strengths—automation, trust, tax optimization; Weaknesses—emotional connection, social presence;
+                    Opportunities—AI personalisation, global expansion, financial wellness; Threats—price wars, crypto hype, regulatory clampdown.
+                </div>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>Leadership Responses (Role-Play Actions)</h2>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>Inès – Head of Product & Tech</strong>
+                        <span><em>Wealthfront Pulse</em>: adaptive AI monitoring with proactive, explainable nudges (“You saved $350 in taxes”).</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Ninon – CMO</strong>
+                        <span><em>Wealthfront Go Viral</em>: creator partnerships, educational TikTok, freemium $10K portfolios.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Samuel – Compliance & Risk</strong>
+                        <span><em>SafeFuture Framework</em>: algorithm transparency report, privacy guarantees, risk controls.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Paco – Investor/Board</strong>
+                        <span><em>Global Expansion</em>: enter EU/APAC robo markets (&lt;5% penetration) to scale assets.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Samuel – Founder/CEO</strong>
+                        <span><em>Wealthfront NEXT</em>: emotionally intelligent AI partner that personalises journeys and explains every decision.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card accent-strength">
+                <h2>Selected Strategy: Wealthfront NEXT</h2>
+                <div class="insight-grid">
+                    <div class="insight-card">
+                        <h4>🧠 Intelligent Empathy</h4>
+                        <p>Turns behavioural data into life-event awareness and transparent guidance—no human advisors needed.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>🔍 Radical Transparency</h4>
+                        <p>Builds on SafeFuture to publish model decisions, bias guardrails, and risk explainability.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>📈 Differentiated Value</h4>
+                        <p>Competes on quality, not price—delivers better long-term outcomes through smarter automation.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>🚀 Execution Ready</h4>
+                        <p>Leverages existing automation stack; requires scaled data science, behavioural UX, and governance upgrades.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>BMC Impact Radar</h2>
+                <div class="tree-columns">
+                    <div class="tree-bullet">
+                        <strong>Value Proposition</strong>
+                        <span>“Calm, intelligent investing.” NEXT adds emotional intelligence & explainable AI.</span>
+                    </div>
+                    <div class="tree-bullet">
+                        <strong>Customer Relationships</strong>
+                        <span>Pulse + NEXT = hyper-personalised journeys, proactive life-event coaching.</span>
+                    </div>
+                    <div class="tree-bullet">
+                        <strong>Channels</strong>
+                        <span>Education-first TikTok, creator partnerships with compliance guardrails.</span>
+                    </div>
+                    <div class="tree-bullet">
+                        <strong>Revenue Streams</strong>
+                        <span>Maintain 0.25% advisory fee; optional premium tiers for deeper AI insights.</span>
+                    </div>
+                    <div class="tree-bullet">
+                        <strong>Key Resources</strong>
+                        <span>Behavioural data science, AI governance, trust & compliance platforms.</span>
+                    </div>
+                    <div class="tree-bullet">
+                        <strong>Key Activities</strong>
+                        <span>Continuous AI monitoring, content storytelling, regulatory reporting.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card accent-weakness">
+                <h2>From Debate to Decision</h2>
+                <div class="detail-list">
+                    <div class="detail-item">
+                        <div>Teams weigh innovation vs. compliance vs. growth; marketing hype rejected in favour of trust + depth.</div>
+                        <span class="tag tag-neutral">Trade-off</span>
+                    </div>
+                    <div class="detail-item">
+                        <div>Consensus: Wealthfront NEXT + SafeFuture baseline → storytelling fuel without eroding credibility.</div>
+                        <span class="tag tag-impact">Company Response</span>
+                    </div>
+                    <div class="detail-item">
+                        <div>Roadmap: Ship NEXT in 18 months, then revisit international expansion with differentiated product.</div>
+                        <span class="tag tag-metric">Next Step</span>
+                    </div>
+                </div>
+                <div class="cta-row" style="margin-top:18px;">
+                    <a href="bmc_visual.html">Open Updated BMC</a>
+                    <a href="swot_visual.html">Review SWOT View</a>
+                    <a href="tools.html">All Strategy Tools</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="question-section" id="q14">
+            <h2 class="question-title">Question 14 — Generative AI Hackathon (Co-Creation Lab)</h2>
+            <p class="question-intro">
+                The hackathon trains teams to wield generative AI for customer discovery and concept design. Below is a guide to
+                structure the session and extend the learning to your own products far beyond the Wealthfront case.
+            </p>
+
+            <div class="section-card accent-opportunity">
+                <h2>Session Blueprint</h2>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>Customer Personas</strong>
+                        <span>Prompt AI to assemble empathy maps for Gen Z investors—motivations, pains, trusted channels, and financial anxieties.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Journey Mapping</strong>
+                        <span>Generate onboarding-to-retention journeys to spot friction, delight, and AI augmentation touchpoints.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Acquisition Experiments</strong>
+                        <span>Produce viral funnel mockups (TikTok scripts, carousel ads, UGC prompts) that align with the personas.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Canvas Practice</strong>
+                        <span>Create 1–2 AI-assisted canvases (Empathy, Journey, Value Proposition) and then critique them with the group.</span>
+                    </div>
+                </div>
+                <div class="cta-row">
+                    <a href="tools.html">Open Tools Library</a>
+                    <a href="vpc_visual.html">Value Proposition Canvas</a>
+                    <a href="customer_journey_visual.html">Customer Journey Map</a>
+                </div>
+            </div>
+
+            <div class="section-card accent-strength">
+                <h2>Prompt Engineering Tips</h2>
+                <ul class="checklist">
+                    <li>Provide context (market, audience, product maturity) and spell out the format you expect (table, bullet list, canvas).</li>
+                    <li>Iterate: generate, critique, refine. Encourage teams to highlight hallucinations and data gaps for group discussion.</li>
+                    <li>Blend quantitative signals (A/B results, NPS themes) with AI output to prevent generic personas.</li>
+                    <li>Capture prompts + outputs in a shared doc to build a reusable playbook for future co-creation labs.</li>
+                </ul>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>Extending Beyond Wealthfront</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>How it translates</th>
+                            <th>Opportunity in your context</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AI Personas</td>
+                            <td>Rapidly stress-test assumptions about emerging segments.</td>
+                            <td>Spin up personas for new verticals, geographies, or B2B roles before interviews.</td>
+                        </tr>
+                        <tr>
+                            <td>Journey Maps</td>
+                            <td>Reveal moments where automation or human touch improve outcomes.</td>
+                            <td>Map onboarding for your product, identify where agentic AI reduces drop-off.</td>
+                        </tr>
+                        <tr>
+                            <td>Acquisition Mockups</td>
+                            <td>Compress creative ideation cycles with channel-ready drafts.</td>
+                            <td>Prototype campaign ideas for your brand, then validate with small paid tests.</td>
+                        </tr>
+                        <tr>
+                            <td>Canvas Sprints</td>
+                            <td>Bridge strategy and execution with visual alignment tools.</td>
+                            <td>Use AI-generated canvases as workshop starters, then refine with cross-functional input.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-card accent-weakness">
+                <h2>Facilitation Flow</h2>
+                <div class="list-grid">
+                    <div class="list-item">
+                        <strong>Kick-off (15 min)</strong>
+                        <span>Frame objectives, showcase good vs. bad AI prompts, assign teams and deliverables.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Sprint Cycles (45–60 min)</strong>
+                        <span>Teams generate assets, critique outputs, iterate, and capture insights.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Share & Validate (30 min)</strong>
+                        <span>Present canvases and mockups, run peer feedback on feasibility, bias, and next experiments.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Action Translation (15 min)</strong>
+                        <span>Each team lists 2–3 opportunities to test inside their own product or venture.</span>
+                    </div>
+                </div>
+                <div class="impact-highlight" style="margin-top:24px;">
+                    Takeaway: the hackathon is less about finished artifacts and more about building a muscle for AI-assisted ideation,
+                    critical evaluation, and rapid translation into your roadmap.
+                </div>
+            </div>
+        </section>
+
+        <section class="question-section" id="q15">
+            <h2 class="question-title">Question 15 — How can AI Agents & Agentic AI improve Wealthfront's value proposition, productivity, and customer experience?</h2>
+            <p class="question-intro">
+                A comprehensive look at the research, frameworks, and impact modelling that quantify agentic AI opportunities
+                for Wealthfront. Each phase below links to the deliverables where the insight originated.
+            </p>
+
+        <div class="phase" id="phase-a">
+            <div class="phase-title">A. Research & Ideation Phase</div>
+
+            <div class="section-card accent-strength">
+                <h2>1. Wealthfront's Current Digital Capabilities</h2>
+                <h3>Existing Automation</h3>
+                <ul class="checklist">
+                    <li>Daily tax-loss harvesting for accounts over $100K <span class="badge badge-success">+0.93% alpha</span></li>
+                    <li>Direct Indexing for $500K+ accounts <span class="badge badge-success">+0.70% alpha</span></li>
+                    <li>Automated rebalancing via variance thresholds</li>
+                    <li>Modern Portfolio Theory allocation across 11 asset classes</li>
+                    <li>Viral referral engine <span class="badge badge-primary">$25K free + $5K/referral</span></li>
+                    <li>Continuous deployment pipeline with multi-daily releases</li>
+                </ul>
+                <h3>Current Limitations</h3>
+                <ul class="checklist">
+                    <li>No conversational interface <span class="badge badge-danger">Static questionnaire</span></li>
+                    <li>Reactive support model limited to email during business hours</li>
+                    <li>Portfolio-only scope without holistic financial planning</li>
+                    <li>No proactive behavioral guidance during market volatility</li>
+                    <li>Generic, non-personalized educational content</li>
+                    <li>Single-account optimization—no coordination with external holdings</li>
+                </ul>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>2. State-of-the-Art AI in Fintech (2025 Benchmark)</h2>
+                <h3>Leading Examples</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>AI innovation</th>
+                            <th>Key feature</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cleo (UK)</td>
+                            <td>Conversational AI with personality</td>
+                            <td>Playful accountability nudges</td>
+                            <td>High Gen Z engagement</td>
+                        </tr>
+                        <tr>
+                            <td>Plum</td>
+                            <td>Autonomous savings agent</td>
+                            <td>Affordability analysis & micro-savings</td>
+                            <td>"Set and forget" savings habits</td>
+                        </tr>
+                        <tr>
+                            <td>Betterment</td>
+                            <td>Goal-based AI planning</td>
+                            <td>Multi-account tax coordination</td>
+                            <td>Holistic optimization</td>
+                        </tr>
+                        <tr>
+                            <td>Rocket Money</td>
+                            <td>Bill negotiation agent</td>
+                            <td>AI identifies subscriptions & negotiates rates</td>
+                            <td>$300-500 annual savings</td>
+                        </tr>
+                        <tr>
+                            <td>OpenAI GPT-4</td>
+                            <td>Agentic workflows</td>
+                            <td>Multi-step reasoning with tool orchestration</td>
+                            <td>True autonomy with guardrails</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Core Capabilities to Adopt</h3>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>Natural Language Understanding</strong>
+                        <span>Conversational UI for onboarding, support, and planning.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Predictive Analytics</strong>
+                        <span>Life-event detection and proactive strategy prompts.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Multi-Step Reasoning</strong>
+                        <span>Complex scenario evaluation and financial trade-off analysis.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Behavioral Economics Integration</strong>
+                        <span>Automated nudges that counteract panic selling and FOMO.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Multi-Account Aggregation</strong>
+                        <span>Full financial view using Plaid-style connections for holistic advice.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card accent-weakness">
+                <h2>3. Gap Analysis: AI Value Creation</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Customer need</th>
+                            <th>Current gap</th>
+                            <th>AI agent solution</th>
+                            <th>Value impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>24/7 Support</td>
+                            <td>Email-only, business hours</td>
+                            <td>Conversational AI chatbot</td>
+                            <td>Automates 80% of inbound queries</td>
+                        </tr>
+                        <tr>
+                            <td>Life Event Guidance</td>
+                            <td>No proactive outreach</td>
+                            <td>Agent detects bonuses, job changes, address updates</td>
+                            <td>+25% AUM per client</td>
+                        </tr>
+                        <tr>
+                            <td>Panic Selling Prevention</td>
+                            <td>Minimal support during volatility</td>
+                            <td>Behavioral nudges with historical context</td>
+                            <td>+1.5-3% behavioral alpha</td>
+                        </tr>
+                        <tr>
+                            <td>Holistic Planning</td>
+                            <td>Portfolio siloed from other accounts</td>
+                            <td>AI coordinates across debt, savings, retirement</td>
+                            <td>Expands addressable market</td>
+                        </tr>
+                        <tr>
+                            <td>Personalized Education</td>
+                            <td>Generic content</td>
+                            <td>Adaptive learning paths</td>
+                            <td>5x content engagement</td>
+                        </tr>
+                        <tr>
+                            <td>Tax Optimization</td>
+                            <td>Daily TLH only</td>
+                            <td>Year-round AI tax strategist</td>
+                            <td>+0.3-0.5% additional alpha</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-card accent-threat">
+                <h2>4. High-Priority AI Opportunities</h2>
+                <h3>TIER 1 · High Impact / Lower Risk</h3>
+                <div class="list-grid">
+                    <div class="list-item">
+                        <strong>AI Financial Chatbot</strong>
+                        <span>Always-on support that explains portfolio moves and policy updates.<br>
+                        <strong>Impact:</strong> 80% cost reduction and instant responses.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Behavioral Nudge System</strong>
+                        <span>Proactive alerts during volatility with historical context.<br>
+                        <strong>Impact:</strong> +1.5-3% behavioral alpha and +20-30% retention.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Personalized Education Engine</strong>
+                        <span>AI-curated explainers that match user knowledge level.<br>
+                        <strong>Impact:</strong> 5x engagement vs. generic content.</span>
+                    </div>
+                </div>
+                <h3>TIER 2 · Transformative / Higher Risk</h3>
+                <div class="list-grid">
+                    <div class="list-item">
+                        <strong>Life Event AI Agent</strong>
+                        <span>Detects deposits, employer changes, and milestones to recommend actions.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Holistic Financial Orchestrator</strong>
+                        <span>Aggregates external accounts to optimize across the full financial picture.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>Autonomous Tax Strategist</strong>
+                        <span>Year-round optimization for conversions, charitable timing, and capital gains planning.</span>
+                    </div>
+                </div>
+                <div class="cta-row">
+                    <a href="swot_visual.html">Review SWOT Analysis</a>
+                    <a href="customer_journey_visual.html">View Journey Touchpoints</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="phase" id="phase-b">
+            <div class="phase-title">B. Framework Application Phase</div>
+
+            <div class="section-card accent-strength">
+                <h2>1. Value Proposition Canvas Insights</h2>
+                <h3>Customer Pains → AI Pain Relievers</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pain</th>
+                            <th>Severity</th>
+                            <th>AI solution</th>
+                            <th>Mechanism</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Overwhelmed by jargon</td>
+                            <td>⭐⭐⭐</td>
+                            <td>Conversational AI</td>
+                            <td>Plain-language answers to “Why did my portfolio drop?”</td>
+                        </tr>
+                        <tr>
+                            <td>Distrust institutions</td>
+                            <td>⭐⭐⭐</td>
+                            <td>Transparent AI</td>
+                            <td>Shows reasoning and data sources behind suggestions.</td>
+                        </tr>
+                        <tr>
+                            <td>No time to manage</td>
+                            <td>⭐⭐</td>
+                            <td>Agentic autonomy</td>
+                            <td>Proactive monitoring and auto-optimization.</td>
+                        </tr>
+                        <tr>
+                            <td>FOMO vs. diversification</td>
+                            <td>⭐⭐</td>
+                            <td>Behavioral education</td>
+                            <td>Explains why diversified portfolios outperform hype assets.</td>
+                        </tr>
+                        <tr>
+                            <td>Don’t know where to start</td>
+                            <td>⭐⭐</td>
+                            <td>Conversational onboarding</td>
+                            <td>“Tell me your goals” dialogue instead of static forms.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Customer Gains → AI Gain Creators</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Desired gain</th>
+                            <th>Priority</th>
+                            <th>AI solution</th>
+                            <th>Value delivered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Automated investing</td>
+                            <td>⭐⭐⭐</td>
+                            <td>Agentic automation</td>
+                            <td>True “set and forget” with proactive adjustments.</td>
+                        </tr>
+                        <tr>
+                            <td>Values alignment</td>
+                            <td>⭐⭐⭐</td>
+                            <td>AI values mapping</td>
+                            <td>ESG portfolio suggestions tied to stated preferences.</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile-first UI</td>
+                            <td>⭐⭐</td>
+                            <td>AI chat interface</td>
+                            <td>Conversational navigation instead of menu hunting.</td>
+                        </tr>
+                        <tr>
+                            <td>Community validation</td>
+                            <td>⭐⭐</td>
+                            <td>AI social insights</td>
+                            <td>Benchmark against anonymized peer performance.</td>
+                        </tr>
+                        <tr>
+                            <td>Financial education</td>
+                            <td>⭐</td>
+                            <td>Adaptive learning</td>
+                            <td>Personalized curriculum that fills knowledge gaps.</td>
+                        </tr>
+                        <tr>
+                            <td>Instant communication</td>
+                            <td>⭐⭐</td>
+                            <td>24/7 AI assistant</td>
+                            <td>Immediate responses instead of 24-48 hour delays.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="cta-row">
+                    <a href="vpc_visual.html">Open Value Proposition Canvas</a>
+                </div>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>2. Customer Journey Map (AI Enhancements)</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>Current experience</th>
+                            <th>AI-enhanced experience</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. Awareness</td>
+                            <td>Mass-market ads and referrals</td>
+                            <td>AI-personalized video ads at scale</td>
+                            <td>+15-25% ad-to-website conversion</td>
+                        </tr>
+                        <tr>
+                            <td>2. Consideration</td>
+                            <td>Static comparisons</td>
+                            <td>Interactive AI chatbot for Q&A</td>
+                            <td>+20% website-to-signup</td>
+                        </tr>
+                        <tr>
+                            <td>3. Onboarding</td>
+                            <td>10-minute questionnaire</td>
+                            <td>Conversational “Tell me your goals” flow</td>
+                            <td>+15-25% signup-to-funding</td>
+                        </tr>
+                        <tr>
+                            <td>4. First Investment</td>
+                            <td>Wait 3-5 days for ACH</td>
+                            <td>AI celebrates progress with tailored updates</td>
+                            <td>Lower anxiety, higher NPS</td>
+                        </tr>
+                        <tr>
+                            <td>5. Active Use</td>
+                            <td>2-3 app visits per week</td>
+                            <td>Proactive nudges and contextual alerts</td>
+                            <td>+66% engagement</td>
+                        </tr>
+                        <tr>
+                            <td>6. Life Events</td>
+                            <td>No proactive guidance</td>
+                            <td>AI detects events and suggests playbooks</td>
+                            <td>+25% contribution rate</td>
+                        </tr>
+                        <tr>
+                            <td>7. Advocacy</td>
+                            <td>Manual referral process</td>
+                            <td>AI-crafted shareable stories</td>
+                            <td>+25-33% referral lift</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="cta-row">
+                    <a href="customer_journey_visual.html">Explore Journey Map</a>
+                </div>
+            </div>
+
+            <div class="section-card accent-threat">
+                <h2>3. SWOT Analysis: AI Adoption</h2>
+                <div class="list-grid two-col">
+                    <div class="list-item">
+                        <strong>STRENGTHS 💪</strong>
+                        <span>Engineering-heavy team, rapid deployment culture, innovation brand, $129M raised, tech-savvy user base.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>WEAKNESSES ⚠️</strong>
+                        <span>No conversational AI today, limited AI talent, lean data for training, regulatory constraints.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>OPPORTUNITIES 🚀</strong>
+                        <span>Gen Z AI expectations, first-mover advantage, expand into holistic wellness, scalable premium service, data flywheel.</span>
+                    </div>
+                    <div class="list-item">
+                        <strong>THREATS ⚡</strong>
+                        <span>Incumbent competition, SEC oversight, AI hallucinations, trust erosion, big tech entrants.</span>
+                    </div>
+                </div>
+                <h3>Strategic Recommendations</h3>
+                <ul class="checklist">
+                    <li><strong>SO:</strong> Ship proprietary AI quickly leveraging the engineering culture.</li>
+                    <li><strong>WO:</strong> Partner with frontier LLM providers and hire targeted AI talent.</li>
+                    <li><strong>ST:</strong> Use continuous deployment and transparency to outrun incumbents.</li>
+                    <li><strong>WT:</strong> Roll out low-risk features first with strong human oversight.</li>
+                </ul>
+                <div class="cta-row">
+                    <a href="swot_visual.html">Open SWOT Deliverable</a>
+                    <a href="bmc_visual.html">Review Business Model Impact</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="phase" id="phase-c">
+            <div class="phase-title">C. Impact Assessment Phase</div>
+
+            <div class="section-card accent-strength">
+                <h2>1. Productivity Gains</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Annual savings/value</th>
+                            <th>Key driver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Customer Support Automation</td>
+                            <td>$1.67M</td>
+                            <td>80% of 5K monthly queries resolved by AI.</td>
+                        </tr>
+                        <tr>
+                            <td>Financial Planning Capability</td>
+                            <td>$11-33M</td>
+                            <td>Avoids hiring 140-280 human planners.</td>
+                        </tr>
+                        <tr>
+                            <td>Content Creation</td>
+                            <td>$250K</td>
+                            <td>50% cost reduction with personalized output.</td>
+                        </tr>
+                        <tr>
+                            <td>Portfolio Optimization</td>
+                            <td>$1.5-3M</td>
+                            <td>+0.10-0.20% execution improvement.</td>
+                        </tr>
+                        <tr>
+                            <td>Engineering Productivity</td>
+                            <td>$1M</td>
+                            <td>AI-assisted development boosts velocity by 25%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL IMPACT</strong></td>
+                            <td><strong>$16-40M/year</strong></td>
+                            <td>Scale to $50M+ with 100K clients.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="impact-highlight">
+                    ROI: Year 1 investment of $7M (development + operations) returns $16-40M → 129-471% ROI.
+                </div>
+            </div>
+
+            <div class="section-card accent-opportunity">
+                <h2>2. Customer Experience Impact</h2>
+                <h3>A. Conversion & Acquisition</h3>
+                <ul class="checklist">
+                    <li>Website conversion: 12.5% → 14.4-15.6% <span class="badge badge-success">+15-25%</span></li>
+                    <li>Additional revenue: $9-30M annually via +1,500-2,500 signups per month.</li>
+                </ul>
+                <h3>B. Retention & Engagement</h3>
+                <ul class="checklist">
+                    <li>Churn reduction: 10-15% → 7-10.5% <span class="badge badge-success">-20-30%</span></li>
+                    <li>Engagement: 2-3 app visits/week → 4-5 visits/week.</li>
+                    <li>Client contributions: +25-50% quarterly additions.</li>
+                    <li>Value retention: $38-57M AUM preserved + $50-100M new AUM per year.</li>
+                </ul>
+                <h3>C. Client Financial Outcomes</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Alpha source</th>
+                            <th>Annual return</th>
+                            <th>10-year client value ($90K account)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Behavioral Alpha</td>
+                            <td>+1.5-3.0%</td>
+                            <td>$13.5K - $27K</td>
+                        </tr>
+                        <tr>
+                            <td>Tax Optimization</td>
+                            <td>+0.3-0.5%</td>
+                            <td>$2.7K - $4.5K</td>
+                        </tr>
+                        <tr>
+                            <td>Execution Timing</td>
+                            <td>+0.1-0.2%</td>
+                            <td>$900 - $1.8K</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Client Alpha</strong></td>
+                            <td><strong>+1.8-3.5%</strong></td>
+                            <td><strong>$17.1K - $33.3K</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="impact-highlight">
+                    Client Lifetime Value increases by 32-62% through higher alpha, engagement, and retention.
+                </div>
+            </div>
+
+            <div class="section-card accent-threat">
+                <h2>3. Risks & Mitigation</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Risk</th>
+                            <th>Impact level</th>
+                            <th>Mitigation strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AI Hallucinations</td>
+                            <td>🔴 Catastrophic</td>
+                            <td>Retrieval-augmented generation, layered verification, no autonomous high-stakes actions.</td>
+                        </tr>
+                        <tr>
+                            <td>Algorithm Bias</td>
+                            <td>🔴 Very high</td>
+                            <td>Diverse training data, fairness constraints, regular audits, ethics board oversight.</td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory Compliance</td>
+                            <td>🟠 High</td>
+                            <td>Proactive SEC engagement, human-in-the-loop positioning, auditable decision trails.</td>
+                        </tr>
+                        <tr>
+                            <td>Trust & Transparency</td>
+                            <td>🟠 High</td>
+                            <td>Explainable AI, user controls, gradual rollout with opt-in features.</td>
+                        </tr>
+                        <tr>
+                            <td>Cybersecurity</td>
+                            <td>🔴 Very high</td>
+                            <td>Penetration testing, input validation, access controls, emergency kill switches.</td>
+                        </tr>
+                        <tr>
+                            <td>Market Volatility Blame</td>
+                            <td>🟡 Medium</td>
+                            <td>Expectation setting, proactive messaging, performance attribution dashboards.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="impact-highlight">
+                    Risk philosophy: launch low-risk automation first, enforce human oversight, and maintain kill switches across all AI agent deployments.
+                </div>
+            </div>
+        </div>
+        </section>
+
+    </div>
+</body>
+</html>

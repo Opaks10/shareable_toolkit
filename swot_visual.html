@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWOT Analysis - Wealthfront</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent-emerald: #22c55e;
+            --accent-teal: #0f766e;
+            --text-primary: #0f172a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #f8fbff 0%, #f1f4f8 45%, #e5e9ef 100%);
+            padding: 40px 40px 80px;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 18px 32px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            position: sticky;
+            top: 24px;
+            z-index: 200;
+        }
+
+        .nav-brand {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #111827;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-links a,
+        .nav-dropdown button {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: background 0.3s ease, color 0.3s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-links a:hover,
+        .nav-dropdown button:hover,
+        .nav-links a:focus,
+        .nav-dropdown button:focus {
+            background: rgba(34, 197, 94, 0.15);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 10px 0;
+            display: none;
+            flex-direction: column;
+            min-width: 190px;
+            z-index: 400;
+        }
+
+        .dropdown-menu a {
+            padding: 9px 18px;
+            color: #1f2937;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background: rgba(34, 197, 94, 0.12);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown:focus-within .dropdown-menu {
+            display: flex;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(247,249,255,0.98) 70%, rgba(241,245,252,0.95) 100%);
+            border-radius: 26px;
+            padding: 44px;
+            box-shadow: 0 32px 75px rgba(15, 23, 42, 0.14);
+            border: 1px solid rgba(180, 190, 205, 0.28);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #4b5563;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .swot-quadrant {
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 22px 44px rgba(15, 23, 42, 0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+        }
+
+        .swot-quadrant::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .strengths {
+            background: linear-gradient(135deg, rgba(236,253,245,0.95) 0%, rgba(209,250,229,0.85) 100%);
+        }
+
+        .strengths::before {
+            background: #059669;
+        }
+
+        .weaknesses {
+            background: linear-gradient(135deg, rgba(254,243,199,0.95) 0%, rgba(253,230,138,0.85) 100%);
+        }
+
+        .weaknesses::before {
+            background: #fbbf24;
+        }
+
+        .opportunities {
+            background: linear-gradient(135deg, rgba(239,246,255,0.95) 0%, rgba(191,219,254,0.85) 100%);
+        }
+
+        .opportunities::before {
+            background: #3b82f6;
+        }
+
+        .threats {
+            background: linear-gradient(135deg, rgba(254,226,226,0.95) 0%, rgba(254,202,202,0.85) 100%);
+        }
+
+        .threats::before {
+            background: #f87171;
+        }
+
+        .quadrant-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        .strengths .quadrant-header {
+            color: #047857;
+        }
+
+        .weaknesses .quadrant-header {
+            color: #b45309;
+        }
+
+        .opportunities .quadrant-header {
+            color: #2563eb;
+        }
+
+        .threats .quadrant-header {
+            color: #b91c1c;
+        }
+
+        .icon {
+            font-size: 1.3em;
+        }
+
+        .item {
+            background: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .item-icon {
+            font-size: 1.2em;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .strategies {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(240,253,244,0.95) 0%, rgba(219,234,254,0.85) 100%);
+            border-radius: 15px;
+        }
+
+        .strategies h2 {
+            color: #0f766e;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .strategy-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            color: #0f766e;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .strategy-content {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .strategy-content ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .strategy-content li {
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 1024px) {
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">Wealthfront Toolkit</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <div class="nav-dropdown">
+                <button type="button">Questions ▾</button>
+                <div class="dropdown-menu">
+                    <a href="questions.html#q7">Question 7</a>
+                    <a href="questions.html#q8">Question 8</a>
+                    <a href="questions.html#q13">Question 13</a>
+                    <a href="questions.html#q14">Question 14</a>
+                    <a href="questions.html#q15">Question 15</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button type="button">Tools ▾</button>
+                <div class="dropdown-menu">
+                    <a href="tools.html">Overview</a>
+                    <a href="bmc_visual.html">Business Model Canvas</a>
+                    <a href="swot_visual.html">SWOT Analysis</a>
+                    <a href="customer_journey_visual.html">Customer Journey Map</a>
+                    <a href="vpc_visual.html">Value Proposition Canvas</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>⚖️ SWOT ANALYSIS</h1>
+        <p class="subtitle">Wealthfront AI Agents & Agentic AI Adoption Strategy</p>
+
+        <div class="swot-grid">
+            <!-- STRENGTHS -->
+            <div class="swot-quadrant strengths">
+                <div class="quadrant-header">
+                    <span class="icon">💪</span>
+                    STRENGTHS
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">👨‍💻</span>
+                    <span><strong>Strong engineering team:</strong> 57% engineers (24/42 employees)</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🚀</span>
+                    <span><strong>Continuous deployment:</strong> Ship features instantly, 60% adopted in 48hrs</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🏆</span>
+                    <span><strong>Innovation brand:</strong> "Track record of defining the category"</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">💰</span>
+                    <span><strong>Financial resources:</strong> $129M raised, $35M unspent</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🎯</span>
+                    <span><strong>Tech-savvy users:</strong> Millennials willing to try AI features</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🤖</span>
+                    <span><strong>Existing automation:</strong> Tax-loss harvesting, rebalancing infrastructure</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">📊</span>
+                    <span><strong>Data asset:</strong> 14,000+ client accounts for ML training</span>
+                </div>
+            </div>
+
+            <!-- WEAKNESSES -->
+            <div class="swot-quadrant weaknesses">
+                <div class="quadrant-header">
+                    <span class="icon">⚠️</span>
+                    WEAKNESSES
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🤷</span>
+                    <span><strong>No conversational AI:</strong> Must build or partner from scratch</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">👥</span>
+                    <span><strong>Small team:</strong> 42 people = resource constraints for AI initiative</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">📉</span>
+                    <span><strong>Limited training data:</strong> Minimal human interactions by design</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">⏰</span>
+                    <span><strong>Compliance bottleneck:</strong> Regulatory approvals slow rollout</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🏦</span>
+                    <span><strong>No multi-account view:</strong> Only manages Wealthfront portfolio</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🎓</span>
+                    <span><strong>AI talent gap:</strong> May lack specialized ML engineers</span>
+                </div>
+            </div>
+
+            <!-- OPPORTUNITIES -->
+            <div class="swot-quadrant opportunities">
+                <div class="quadrant-header">
+                    <span class="icon">🚀</span>
+                    OPPORTUNITIES
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🤖</span>
+                    <span><strong>Gen Z expects AI:</strong> ChatGPT normalized conversational AI</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🥇</span>
+                    <span><strong>First-mover advantage:</strong> Agentic financial planning undefined</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">📈</span>
+                    <span><strong>Expand TAM:</strong> From investing to full financial wellness (3x market)</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🔄</span>
+                    <span><strong>Data flywheel:</strong> More users → Better AI → More users</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">👴</span>
+                    <span><strong>Serve older clients:</strong> AI enables sophistication without cost increase</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🏢</span>
+                    <span><strong>B2B opportunity:</strong> AI tools white-label for RIAs ($2T+ market)</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">💸</span>
+                    <span><strong>Reduce churn:</strong> Behavioral nudges improve retention 20-30%</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">📊</span>
+                    <span><strong>Behavioral alpha:</strong> AI coaching adds +1.5-3% annual returns</span>
+                </div>
+            </div>
+
+            <!-- THREATS -->
+            <div class="swot-quadrant threats">
+                <div class="quadrant-header">
+                    <span class="icon">⚡</span>
+                    THREATS
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🏦</span>
+                    <span><strong>Incumbents:</strong> Schwab, Vanguard have massive R&D budgets</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">⚔️</span>
+                    <span><strong>Direct competition:</strong> Betterment launching AI features</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🏢</span>
+                    <span><strong>Big Tech entry:</strong> Google, Apple could launch overnight</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">⚖️</span>
+                    <span><strong>Regulation:</strong> SEC may require human oversight (defeats automation)</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🤥</span>
+                    <span><strong>AI hallucinations:</strong> Incorrect advice = lawsuits + reputation damage</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">🔒</span>
+                    <span><strong>Cybersecurity:</strong> Prompt injection attacks, data breaches</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">😡</span>
+                    <span><strong>Trust erosion:</strong> Users view AI as "cutting corners"</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">👨‍💻</span>
+                    <span><strong>Talent war:</strong> Competing with FAANG for AI engineers</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">⚖️</span>
+                    <span><strong>Algorithm bias:</strong> Discriminatory recommendations = regulatory issues</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- STRATEGIES -->
+        <div class="strategies">
+            <h2>🎯 SWOT Strategic Recommendations</h2>
+
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-title">
+                        <span>💪🚀</span>
+                        SO Strategy (Leverage Strengths for Opportunities)
+                    </div>
+                    <div class="strategy-content">
+                        <ul>
+                            <li><strong>Build proprietary AI:</strong> Use engineering talent + capital before competitors</li>
+                            <li><strong>Brand as "AI-first":</strong> Leverage innovation reputation</li>
+                            <li><strong>Deploy rapidly:</strong> Continuous deployment = speed advantage</li>
+                            <li><strong>Data moat:</strong> Use existing accounts to train superior AI</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <div class="strategy-title">
+                        <span>⚠️🚀</span>
+                        WO Strategy (Overcome Weaknesses for Opportunities)
+                    </div>
+                    <div class="strategy-content">
+                        <ul>
+                            <li><strong>Partner for LLM:</strong> Use OpenAI/Anthropic (don't build from scratch)</li>
+                            <li><strong>Hire AI talent:</strong> Use $35M unspent to recruit 5-10 ML engineers</li>
+                            <li><strong>Gradual rollout:</strong> Start with chatbot before agentic features</li>
+                            <li><strong>Multi-account aggregation:</strong> Integrate Plaid for holistic view</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <div class="strategy-title">
+                        <span>💪⚡</span>
+                        ST Strategy (Use Strengths to Counter Threats)
+                    </div>
+                    <div class="strategy-content">
+                        <ul>
+                            <li><strong>Speed beats scale:</strong> Continuous deployment faster than incumbents</li>
+                            <li><strong>Explainable AI:</strong> Transparency culture = trust advantage</li>
+                            <li><strong>Proactive SEC engagement:</strong> Compliance team ensures regulatory approval</li>
+                            <li><strong>Mission-driven recruiting:</strong> Attract AI talent vs. Big Tech</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <div class="strategy-title">
+                        <span>⚠️⚡</span>
+                        WT Strategy (Minimize Weaknesses & Threats)
+                    </div>
+                    <div class="strategy-content">
+                        <ul>
+                            <li><strong>Conservative rollout:</strong> Low-risk features first (chatbot → autonomy)</li>
+                            <li><strong>Extensive testing:</strong> Prevent hallucinations with RAG + verification</li>
+                            <li><strong>Clear communication:</strong> "AI enhances, doesn't replace" trusted software</li>
+                            <li><strong>Kill switches:</strong> Disable AI if error rate >1%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

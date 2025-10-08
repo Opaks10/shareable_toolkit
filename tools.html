@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools Library - Wealthfront</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --accent-emerald: #22c55e;
+            --accent-teal: #0f766e;
+            --accent-soft: rgba(34, 197, 94, 0.15);
+            --text-primary: #0f172a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #f8fbff 0%, #f1f4f8 45%, #e5e9ef 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            gap: 30px;
+        }
+
+        .top-nav {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 18px 32px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            position: sticky;
+            top: 24px;
+            z-index: 200;
+        }
+
+        .nav-brand {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #111827;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-links a,
+        .nav-dropdown button {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: background 0.3s ease, color 0.3s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-links a:hover,
+        .nav-dropdown button:hover,
+        .nav-links a:focus,
+        .nav-dropdown button:focus {
+            background: rgba(34, 197, 94, 0.15);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown { position: relative; }
+
+        .nav-dropdown button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 10px 0;
+            display: none;
+            flex-direction: column;
+            min-width: 190px;
+            z-index: 400;
+        }
+
+        .dropdown-menu a {
+            padding: 9px 18px;
+            color: #1f2937;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background: rgba(34, 197, 94, 0.12);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown:focus-within .dropdown-menu {
+            display: flex;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(247,249,255,0.98) 70%, rgba(241,245,252,0.95) 100%);
+            border-radius: 26px;
+            padding: 48px 45px;
+            box-shadow: 0 32px 75px rgba(15, 23, 42, 0.14);
+            border: 1px solid rgba(180, 190, 205, 0.28);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-size: 2.6em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #4b5563;
+            margin-bottom: 35px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .tool-card {
+            background: rgba(255,255,255,0.94);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card h2 {
+            font-size: 1.3em;
+            color: #0f172a;
+        }
+
+        .tool-card p {
+            font-size: 0.95em;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .tool-card a {
+            align-self: flex-start;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #22c55e 0%, #0f766e 100%);
+            color: white;
+            box-shadow: 0 16px 32px rgba(15, 118, 110, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .tool-card a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 22px 44px rgba(15, 118, 110, 0.28);
+            background: linear-gradient(135deg, #16a34a 0%, #115e59 100%);
+        }
+
+        .accent-strength::before,
+        .accent-weakness::before,
+        .accent-opportunity::before,
+        .accent-threat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .accent-strength::before {
+            background: linear-gradient(90deg, #22c55e 0%, #15803d 100%);
+        }
+
+        .accent-weakness::before {
+            background: linear-gradient(90deg, #fef3c7 0%, #f59e0b 100%);
+        }
+
+        .accent-opportunity::before {
+            background: linear-gradient(90deg, #38bdf8 0%, #0ea5e9 100%);
+        }
+
+        .accent-threat::before {
+            background: linear-gradient(90deg, #f472b6 0%, #db2777 100%);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 20px 20px 60px; }
+            .container { padding: 32px 24px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">Wealthfront Toolkit</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <div class="nav-dropdown">
+                <button type="button">Questions ▾</button>
+                <div class="dropdown-menu">
+                    <a href="questions.html#q7">Question 7</a>
+                    <a href="questions.html#q8">Question 8</a>
+                    <a href="questions.html#q13">Question 13</a>
+                    <a href="questions.html#q14">Question 14</a>
+                    <a href="questions.html#q15">Question 15</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button type="button">Tools ▾</button>
+                <div class="dropdown-menu">
+                    <a href="tools.html">Overview</a>
+                    <a href="bmc_visual.html">Business Model Canvas</a>
+                    <a href="swot_visual.html">SWOT Analysis</a>
+                    <a href="customer_journey_visual.html">Customer Journey Map</a>
+                    <a href="vpc_visual.html">Value Proposition Canvas</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Tools Library</h1>
+        <p class="subtitle">
+            Access every Wealthfront deliverable from a single hub. Each module below opens a detailed visualization,
+            ready for workshops, presentations, or deeper analysis.
+        </p>
+        <div class="tool-grid">
+            <div class="tool-card accent-opportunity">
+                <h2>Business Model Canvas</h2>
+                <p>Map Wealthfront’s key partners, activities, value propositions, and economics—plus future AI enhancements.</p>
+                <a href="bmc_visual.html">Open Canvas</a>
+            </div>
+            <div class="tool-card accent-threat">
+                <h2>SWOT Analysis</h2>
+                <p>Evaluate strengths, weaknesses, opportunities, and threats with strategic plays anchored in AI readiness.</p>
+                <a href="swot_visual.html">Open SWOT</a>
+            </div>
+            <div class="tool-card accent-weakness">
+                <h2>Customer Journey Map</h2>
+                <p>Follow Gen Z investors from awareness to advocacy and spot AI moments that boost engagement.</p>
+                <a href="customer_journey_visual.html">Open Journey Map</a>
+            </div>
+            <div class="tool-card accent-strength">
+                <h2>Value Proposition Canvas</h2>
+                <p>Align Wealthfront’s AI-powered gains and pain relievers with evolving client jobs and expectations.</p>
+                <a href="vpc_visual.html">Open VPC</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

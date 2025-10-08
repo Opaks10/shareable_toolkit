@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Model Canvas - Wealthfront</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent-emerald: #22c55e;
+            --accent-teal: #0f766e;
+            --text-primary: #0f172a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #f8fbff 0%, #f1f4f8 45%, #e5e9ef 100%);
+            padding: 40px 40px 80px;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 18px 32px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            position: sticky;
+            top: 24px;
+            z-index: 200;
+        }
+
+        .nav-brand {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #111827;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-links a,
+        .nav-dropdown button {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: background 0.3s ease, color 0.3s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-links a:hover,
+        .nav-dropdown button:hover,
+        .nav-links a:focus,
+        .nav-dropdown button:focus {
+            background: rgba(34, 197, 94, 0.15);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 10px 0;
+            display: none;
+            flex-direction: column;
+            min-width: 190px;
+            z-index: 400;
+        }
+
+        .dropdown-menu a {
+            padding: 9px 18px;
+            color: #1f2937;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background: rgba(34, 197, 94, 0.12);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown:focus-within .dropdown-menu {
+            display: flex;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(250,252,255,0.98) 60%, rgba(243,246,252,0.95) 100%);
+            border-radius: 28px;
+            padding: 48px;
+            box-shadow: 0 36px 80px rgba(15, 23, 42, 0.14);
+            border: 1px solid rgba(180, 190, 205, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #4b5563;
+            margin-bottom: 30px;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .toggle-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 28px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 10px 25px rgba(15, 23, 42, 0.12);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            color: #1f2937;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #22c55e 0%, #0f766e 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 18px 32px rgba(15, 118, 110, 0.28);
+        }
+
+        .toggle-btn:not(.active) {
+            color: #475569;
+        }
+
+        .canvas {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: auto auto;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .block {
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            min-height: 200px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(255, 255, 255, 0.92);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .block-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(226, 232, 240, 0.8);
+            position: relative;
+            padding-right: 6px;
+        }
+
+        .block-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .key-partners .block-title::after { background: linear-gradient(90deg, rgba(99,102,241,0.7) 0%, rgba(99,102,241,0) 100%); }
+        .key-activities .block-title::after { background: linear-gradient(90deg, rgba(56,189,248,0.7) 0%, rgba(56,189,248,0) 100%); }
+        .value-propositions .block-title::after { background: linear-gradient(90deg, rgba(74,222,128,0.8) 0%, rgba(74,222,128,0) 100%); }
+        .customer-relationships .block-title::after { background: linear-gradient(90deg, rgba(244,114,182,0.6) 0%, rgba(244,114,182,0) 100%); }
+        .customer-segments .block-title::after { background: linear-gradient(90deg, rgba(248,180,0,0.6) 0%, rgba(248,180,0,0) 100%); }
+        .key-resources .block-title::after { background: linear-gradient(90deg, rgba(52,211,153,0.7) 0%, rgba(52,211,153,0) 100%); }
+        .channels .block-title::after { background: linear-gradient(90deg, rgba(14,165,233,0.7) 0%, rgba(14,165,233,0) 100%); }
+
+        .icon {
+            font-size: 1.3em;
+        }
+
+        .block-content {
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .block-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .block-content li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .block-content li::before {
+            content: '•';
+            position: absolute;
+            left: 5px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .ai-enhancement {
+            background: #ecfdf5;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 0.85em;
+            border-left: 3px solid #16a34a;
+            color: #1f2937;
+        }
+
+        .ai-enhancement::before {
+            content: '🤖 AI: ';
+            font-weight: bold;
+            color: #0f766e;
+        }
+
+        /* Color coding for blocks */
+        .block::after {
+            content: '';
+            position: absolute;
+            top: -35%;
+            right: -35%;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .key-partners::after { background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, rgba(99,102,241,0) 70%); }
+        .key-activities::after { background: radial-gradient(circle, rgba(56,189,248,0.18) 0%, rgba(56,189,248,0) 70%); }
+        .value-propositions::after { background: radial-gradient(circle, rgba(74,222,128,0.2) 0%, rgba(74,222,128,0) 70%); }
+        .customer-relationships::after { background: radial-gradient(circle, rgba(244,114,182,0.16) 0%, rgba(244,114,182,0) 70%); }
+        .customer-segments::after { background: radial-gradient(circle, rgba(248,180,0,0.16) 0%, rgba(248,180,0,0) 70%); }
+        .key-resources::after { background: radial-gradient(circle, rgba(52,211,153,0.18) 0%, rgba(52,211,153,0) 70%); }
+        .channels::after { background: radial-gradient(circle, rgba(14,165,233,0.18) 0%, rgba(14,165,233,0) 70%); }
+
+        .key-partners { grid-column: 1; grid-row: 1 / 3; }
+        .key-activities { grid-column: 2; grid-row: 1; }
+        .value-propositions { grid-column: 3; grid-row: 1 / 3; }
+        .customer-relationships { grid-column: 4; grid-row: 1; }
+        .customer-segments { grid-column: 5; grid-row: 1 / 3; }
+        .key-resources { grid-column: 2; grid-row: 2; }
+        .channels { grid-column: 4; grid-row: 2; }
+        
+        .cost-structure {
+            background: rgba(255, 255, 255, 0.94);
+            grid-column: 1 / 4;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-streams {
+            background: rgba(255, 255, 255, 0.94);
+            grid-column: 4 / 6;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cost-structure::after,
+        .revenue-streams::after {
+            content: '';
+            position: absolute;
+            top: -35%;
+            right: -20%;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0) 70%);
+        }
+
+        .revenue-streams::after {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%);
+        }
+
+        .bottom-row {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        @media (max-width: 1400px) {
+            .canvas {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            .key-partners,
+            .value-propositions,
+            .customer-segments {
+                grid-column: auto;
+                grid-row: auto;
+            }
+
+            .bottom-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">Wealthfront Toolkit</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <div class="nav-dropdown">
+                <button type="button">Questions ▾</button>
+                <div class="dropdown-menu">
+                    <a href="questions.html#q7">Question 7</a>
+                    <a href="questions.html#q8">Question 8</a>
+                    <a href="questions.html#q13">Question 13</a>
+                    <a href="questions.html#q14">Question 14</a>
+                    <a href="questions.html#q15">Question 15</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button type="button">Tools ▾</button>
+                <div class="dropdown-menu">
+                    <a href="tools.html">Overview</a>
+                    <a href="bmc_visual.html">Business Model Canvas</a>
+                    <a href="swot_visual.html">SWOT Analysis</a>
+                    <a href="customer_journey_visual.html">Customer Journey Map</a>
+                    <a href="vpc_visual.html">Value Proposition Canvas</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>🏗️ Business Model Canvas</h1>
+        <p class="subtitle">Wealthfront: Current (2014) vs. AI-Enhanced Future (2025+)</p>
+
+        <div class="toggle-buttons">
+            <button class="toggle-btn active" onclick="showVersion('current')">📅 Current Model (2014)</button>
+            <button class="toggle-btn" onclick="showVersion('ai')">🤖 AI-Enhanced Model (2025+)</button>
+        </div>
+
+        <!-- CURRENT MODEL -->
+        <div id="current-model">
+            <div class="canvas">
+                <div class="block key-partners">
+                    <div class="block-title"><span class="icon">🤝</span> Key Partners</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>ETF Providers:</strong> Vanguard, iShares, State Street</li>
+                            <li><strong>Custodian:</strong> Third-party brokerage (assets held)</li>
+                            <li><strong>Payment processors:</strong> ACH transfers, Plaid</li>
+                            <li><strong>VC investors:</strong> Index Ventures, Greylock</li>
+                            <li><strong>Advisory board:</strong> Burton Malkiel, Charley Ellis</li>
+                            <li><strong>Tech partners:</strong> AWS hosting, security providers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block key-activities">
+                    <div class="block-title"><span class="icon">⚙️</span> Key Activities</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Algorithmic portfolio management</li>
+                            <li>Daily tax-loss harvesting</li>
+                            <li>Automated rebalancing</li>
+                            <li>Software development (continuous deployment)</li>
+                            <li>Content marketing (blog, white papers)</li>
+                            <li>Customer education</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block value-propositions">
+                    <div class="block-title"><span class="icon">💎</span> Value Propositions</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Ultra-low fees:</strong> 0.25% vs 1%+ traditional</li>
+                            <li><strong>Automated investing:</strong> "Set and forget"</li>
+                            <li><strong>Tax optimization:</strong> Daily TLH, Direct Indexing</li>
+                            <li><strong>Freemium:</strong> $25K free + $5K per referral</li>
+                            <li><strong>Democratization:</strong> $5K minimum (vs $50K+)</li>
+                            <li><strong>Transparency:</strong> No hidden fees, open methodology</li>
+                            <li><strong>Sophisticated:</strong> 11 asset classes, MPT-based</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block customer-relationships">
+                    <div class="block-title"><span class="icon">👥</span> Customer Relationships</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Automated service:</strong> No human advisors needed</li>
+                            <li><strong>Email support:</strong> For complex questions</li>
+                            <li><strong>Educational content:</strong> Blog, white papers, seminars</li>
+                            <li><strong>Viral referral program:</strong> Friend-to-friend recommendations</li>
+                            <li><strong>Mobile app:</strong> Self-service interface</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block customer-segments">
+                    <div class="block-title"><span class="icon">🎯</span> Customer Segments</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Primary:</strong> Millennials (25-40)</li>
+                            <li><strong>Focus:</strong> Tech workers in SF, Seattle, Austin</li>
+                            <li><strong>Characteristics:</strong>
+                                <ul style="margin-left: 15px; margin-top: 8px;">
+                                    <li style="list-style-type: circle;">$60K-120K income</li>
+                                    <li style="list-style-type: circle;">Tech-savvy, mobile-first</li>
+                                    <li style="list-style-type: circle;">Distrust traditional finance</li>
+                                    <li style="list-style-type: circle;">$5K-100K investable</li>
+                                    <li style="list-style-type: circle;">Want automation</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block key-resources">
+                    <div class="block-title"><span class="icon">🛠️</span> Key Resources</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Engineering team:</strong> 24 of 42 employees</li>
+                            <li><strong>Proprietary algorithms:</strong> Portfolio optimization, TLH</li>
+                            <li><strong>Brand reputation:</strong> Innovation leader</li>
+                            <li><strong>Capital:</strong> $129M raised</li>
+                            <li><strong>Client data:</strong> 14,000 accounts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block channels">
+                    <div class="block-title"><span class="icon">📢</span> Channels</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Viral referral:</strong> 80%+ organic acquisition</li>
+                            <li><strong>Content marketing:</strong> Blog, white papers</li>
+                            <li><strong>Investment seminars:</strong> At tech companies pre-IPO</li>
+                            <li><strong>Social media:</strong> Twitter, LinkedIn</li>
+                            <li><strong>PR:</strong> WSJ, TechCrunch, Bloomberg</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-row">
+                <div class="cost-structure">
+                    <div class="block-title"><span class="icon">💸</span> Cost Structure</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Engineering salaries:</strong> 24 engineers @ $120-180K = $3-4.3M/year</li>
+                            <li><strong>Infrastructure:</strong> AWS, data storage, security = $500K-1M/year</li>
+                            <li><strong>Custodial fees:</strong> Third-party brokerage fees</li>
+                            <li><strong>Compliance:</strong> Regulatory, legal, audit = $500K+/year</li>
+                            <li><strong>Marketing:</strong> Content, PR, events = $500K/year</li>
+                            <li><strong>Support staff:</strong> Customer service, operations = $500K/year</li>
+                            <li><strong>Total estimated:</strong> $5.5-7M/year (pre-profitability)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="revenue-streams">
+                    <div class="block-title"><span class="icon">💰</span> Revenue Streams</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>Advisory fees:</strong> 0.25% on AUM above free threshold</li>
+                            <li><strong>Example:</strong> $1.5B AUM × ~60% paying × 0.25% = <strong>~$2.25M/year</strong></li>
+                            <li><strong>Growth trajectory:</strong> Rapid AUM growth ($97M→$1.5B in 2 years)</li>
+                            <li><strong>Unit economics:</strong> Low CAC (viral), high LTV</li>
+                            <li><strong>Path to profitability:</strong> Need $3-4B AUM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI-ENHANCED MODEL -->
+        <div id="ai-model" class="hide">
+            <div class="canvas">
+                <div class="block key-partners">
+                    <div class="block-title"><span class="icon">🤝</span> Key Partners</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>ETF Providers, Custodian, Payment processors (same)</li>
+                            <li><div class="ai-enhancement">OpenAI/Anthropic for LLM infrastructure</div></li>
+                            <li><div class="ai-enhancement">Plaid for multi-account aggregation</div></li>
+                            <li><div class="ai-enhancement">AI security partners (bias auditing, red teaming)</div></li>
+                            <li>VC investors, Advisory board (same)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block key-activities">
+                    <div class="block-title"><span class="icon">⚙️</span> Key Activities</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Portfolio management, TLH, rebalancing (same)</li>
+                            <li><div class="ai-enhancement">AI conversational support (24/7 chatbot)</div></li>
+                            <li><div class="ai-enhancement">Proactive behavioral coaching</div></li>
+                            <li><div class="ai-enhancement">Life event detection & planning</div></li>
+                            <li><div class="ai-enhancement">Holistic financial orchestration</div></li>
+                            <li><div class="ai-enhancement">Personalized content generation</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block value-propositions">
+                    <div class="block-title"><span class="icon">💎</span> Value Propositions</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Ultra-low fees, automation, tax optimization (same)</li>
+                            <li><div class="ai-enhancement"><strong>24/7 AI coach:</strong> Answers questions, explains decisions</div></li>
+                            <li><div class="ai-enhancement"><strong>Behavioral alpha:</strong> +1.5-3% returns from nudges</div></li>
+                            <li><div class="ai-enhancement"><strong>Holistic planning:</strong> Debt, savings, investments coordinated</div></li>
+                            <li><div class="ai-enhancement"><strong>Proactive guidance:</strong> Life events, windfalls, opportunities</div></li>
+                            <li><div class="ai-enhancement"><strong>Personalized education:</strong> Adaptive learning paths</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block customer-relationships">
+                    <div class="block-title"><span class="icon">👥</span> Customer Relationships</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Automated service, viral referral (same)</li>
+                            <li><div class="ai-enhancement">AI chatbot handles 80% of support queries</div></li>
+                            <li><div class="ai-enhancement">Proactive notifications (volatility, opportunities)</div></li>
+                            <li><div class="ai-enhancement">AI-facilitated community (peer matching)</div></li>
+                            <li><div class="ai-enhancement">Personalized milestone celebrations</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block customer-segments">
+                    <div class="block-title"><span class="icon">🎯</span> Customer Segments</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Millennials (25-40) - same</li>
+                            <li><div class="ai-enhancement"><strong>Gen Z (18-28):</strong> AI-native, expects conversational interface</div></li>
+                            <li><div class="ai-enhancement"><strong>Older affluent:</strong> AI enables serving $500K-1M+ accounts profitably</div></li>
+                            <li><div class="ai-enhancement"><strong>Holistic segment:</strong> Those wanting full financial wellness (debt, goals)</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block key-resources">
+                    <div class="block-title"><span class="icon">🛠️</span> Key Resources</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Engineering team, algorithms, brand (same)</li>
+                            <li><div class="ai-enhancement">AI/ML team (5-10 specialized engineers)</div></li>
+                            <li><div class="ai-enhancement">Client behavioral data (50K+ accounts)</div></li>
+                            <li><div class="ai-enhancement">Proprietary AI models (fine-tuned for finance)</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block channels">
+                    <div class="block-title"><span class="icon">📢</span> Channels</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Viral referral, content, seminars (same)</li>
+                            <li><div class="ai-enhancement">TikTok/Instagram Reels (AI-generated personalized ads)</div></li>
+                            <li><div class="ai-enhancement">AI chatbot on website (interactive consideration)</div></li>
+                            <li><div class="ai-enhancement">Automated influencer partnerships</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-row">
+                <div class="cost-structure">
+                    <div class="block-title"><span class="icon">💸</span> Cost Structure</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Engineering, infrastructure, compliance (same baseline)</li>
+                            <li><div class="ai-enhancement"><strong>AI development:</strong> $5M one-time</div></li>
+                            <li><div class="ai-enhancement"><strong>AI operations:</strong> $2M/year (LLM API costs, infrastructure)</div></li>
+                            <li><div class="ai-enhancement"><strong>AI talent:</strong> 5-10 ML engineers @ $200-300K = $1-3M/year</div></li>
+                            <li><strong>Support savings:</strong> -$1.67M/year (80% automation)</li>
+                            <li><strong>Total net increase:</strong> +$5-7M Year 1, then +$2-4M/year ongoing</li>
+                            <li><strong>BUT: Revenue grows faster than costs (profitability improves)</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="revenue-streams">
+                    <div class="block-title"><span class="icon">💰</span> Revenue Streams</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Advisory fees 0.25% (same)</li>
+                            <li><div class="ai-enhancement"><strong>Higher AUM per client:</strong> +25% contributions from proactive nudges</div></li>
+                            <li><div class="ai-enhancement"><strong>Lower churn:</strong> 20-30% reduction = retain $38-57M AUM</div></li>
+                            <li><div class="ai-enhancement"><strong>Higher conversion:</strong> +15-25% signup rate</div></li>
+                            <li><div class="ai-enhancement"><strong>Premium tiers:</strong> $10-20/month for advanced AI features?</div></li>
+                            <li><strong>Impact:</strong> At $5B AUM × 65% paying × 0.25% = <strong>$8.1M/year</strong> (+$5.9M vs current)</li>
+                            <li><strong>Path to $50B AUM by 2030 with AI advantages</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f0f8ff; border-radius: 12px; text-align: center;">
+            <strong style="color: #667eea; font-size: 1.2em;">🚀 AI Business Model Impact:</strong>
+            <p style="margin-top: 10px; color: #555;">
+                <strong>ROI:</strong> $7M Year 1 investment → $16-40M productivity gains + $9-30M revenue growth = 
+                <span style="color: #27ae60; font-size: 1.3em; font-weight: bold;">843-1,829% ROI</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function showVersion(version) {
+            const currentModel = document.getElementById('current-model');
+            const aiModel = document.getElementById('ai-model');
+            const buttons = document.querySelectorAll('.toggle-btn');
+
+            if (version === 'current') {
+                currentModel.classList.remove('hide');
+                aiModel.classList.add('hide');
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+            } else {
+                currentModel.classList.add('hide');
+                aiModel.classList.remove('hide');
+                buttons[0].classList.remove('active');
+                buttons[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

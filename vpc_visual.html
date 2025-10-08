@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Proposition Canvas - Wealthfront</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent-emerald: #22c55e;
+            --accent-teal: #0f766e;
+            --text-primary: #0f172a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #f8fbff 0%, #f1f4f8 45%, #e5e9ef 100%);
+            padding: 40px 40px 80px;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 18px 32px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            position: sticky;
+            top: 24px;
+            z-index: 200;
+        }
+
+        .nav-brand {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #111827;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-links a,
+        .nav-dropdown button {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: background 0.3s ease, color 0.3s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-links a:hover,
+        .nav-dropdown button:hover,
+        .nav-links a:focus,
+        .nav-dropdown button:focus {
+            background: rgba(34, 197, 94, 0.15);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 10px 0;
+            display: none;
+            flex-direction: column;
+            min-width: 190px;
+            z-index: 400;
+        }
+
+        .dropdown-menu a {
+            padding: 9px 18px;
+            color: #1f2937;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background: rgba(34, 197, 94, 0.12);
+            color: #0f766e;
+            outline: none;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown:focus-within .dropdown-menu {
+            display: flex;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(247,249,255,0.98) 70%, rgba(241,245,252,0.95) 100%);
+            border-radius: 28px;
+            padding: 48px;
+            box-shadow: 0 32px 75px rgba(15, 23, 42, 0.14);
+            border: 1px solid rgba(180, 190, 205, 0.28);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #4b5563;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .canvas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .side {
+            position: relative;
+        }
+
+        .customer-profile {
+            background: linear-gradient(135deg, rgba(240,253,244,0.95) 0%, rgba(167,243,208,0.9) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            color: #1f2937;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .value-map {
+            background: linear-gradient(135deg, rgba(219,234,254,0.95) 0%, rgba(191,219,254,0.88) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            color: #1f2937;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #0f172a;
+        }
+
+        .subsection {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #1f2937;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
+        .subsection h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .item {
+            background: #f8fafc;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #16a34a;
+            font-size: 0.95em;
+            line-height: 1.5;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .priority-high { background: #fee2e2; color: #b91c1c; }
+        .priority-medium { background: #fef3c7; color: #b45309; }
+        .priority-low { background: #dcfce7; color: #047857; }
+
+        .fit-indicator {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #ecfdf5;
+            border-radius: 18px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .fit-indicator h2 {
+            color: #0f766e;
+            margin-bottom: 15px;
+        }
+
+        .fit-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .fit-bar {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: left;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
+        .fit-bar-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #1f2937;
+        }
+
+        .fit-bar-progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .fit-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e 0%, #0f766e 100%);
+            transition: width 1s ease;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.14);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: #16a34a;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .canvas {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">Wealthfront Toolkit</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <div class="nav-dropdown">
+                <button type="button">Questions ▾</button>
+                <div class="dropdown-menu">
+                    <a href="questions.html#q7">Question 7</a>
+                    <a href="questions.html#q8">Question 8</a>
+                    <a href="questions.html#q13">Question 13</a>
+                    <a href="questions.html#q14">Question 14</a>
+                    <a href="questions.html#q15">Question 15</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button type="button">Tools ▾</button>
+                <div class="dropdown-menu">
+                    <a href="tools.html">Overview</a>
+                    <a href="bmc_visual.html">Business Model Canvas</a>
+                    <a href="swot_visual.html">SWOT Analysis</a>
+                    <a href="customer_journey_visual.html">Customer Journey Map</a>
+                    <a href="vpc_visual.html">Value Proposition Canvas</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>🎯 Value Proposition Canvas</h1>
+        <p class="subtitle">Wealthfront's Fit with Millennial/Gen Z Investors</p>
+
+        <div class="canvas">
+            <!-- LEFT SIDE: Customer Profile -->
+            <div class="side customer-profile">
+                <div class="section-title">👥 CUSTOMER PROFILE</div>
+                
+                <div class="subsection">
+                    <h3><span class="icon">💼</span> Customer Jobs</h3>
+                    <div class="item">Grow wealth passively for retirement</div>
+                    <div class="item">Manage risk through diversification</div>
+                    <div class="item">Optimize taxes on investments</div>
+                    <div class="item">Save for specific goals (house, travel)</div>
+                    <div class="item">Appear financially responsible to peers</div>
+                    <div class="item">Align investments with personal values</div>
+                </div>
+
+                <div class="subsection">
+                    <h3><span class="icon">😰</span> Pains</h3>
+                    <div class="item">Overwhelmed by financial jargon <span class="priority priority-high">HIGH</span></div>
+                    <div class="item">Distrust of financial institutions <span class="priority priority-high">HIGH</span></div>
+                    <div class="item">High entry barriers ($50K+ minimums) <span class="priority priority-high">HIGH</span></div>
+                    <div class="item">No behavioral guidance during volatility <span class="priority priority-high">HIGH</span></div>
+                    <div class="item">No time for active management <span class="priority priority-medium">MEDIUM</span></div>
+                    <div class="item">Uncertainty if strategy is optimal <span class="priority priority-medium">MEDIUM</span></div>
+                    <div class="item">Sub-optimal performance (high fees, taxes) <span class="priority priority-high">HIGH</span></div>
+                    <div class="item">Fear of losing money in market crash <span class="priority priority-high">HIGH</span></div>
+                </div>
+
+                <div class="subsection">
+                    <h3><span class="icon">🎯</span> Gains</h3>
+                    <div class="item">Complete automation "set & forget" <span class="priority priority-high">CRITICAL</span></div>
+                    <div class="item">Ultra-low fees (0.25% vs 1%+) <span class="priority priority-high">CRITICAL</span></div>
+                    <div class="item">Security and legitimacy (SEC, SIPC) <span class="priority priority-high">CRITICAL</span></div>
+                    <div class="item">Accessible with small amounts <span class="priority priority-high">CRITICAL</span></div>
+                    <div class="item">Automatic diversification <span class="priority priority-medium">EXPECTED</span></div>
+                    <div class="item">Competitive market performance <span class="priority priority-medium">EXPECTED</span></div>
+                    <div class="item">Mobile-first beautiful interface <span class="priority priority-medium">EXPECTED</span></div>
+                    <div class="item">Advanced tax optimization <span class="priority priority-medium">DESIRED</span></div>
+                    <div class="item">Values-aligned investing (ESG) <span class="priority priority-low">NICE</span></div>
+                    <div class="item">Social validation & community <span class="priority priority-low">NICE</span></div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Value Map -->
+            <div class="side value-map">
+                <div class="section-title">📦 VALUE MAP</div>
+                
+                <div class="subsection">
+                    <h3><span class="icon">🏗️</span> Products & Services</h3>
+                    <div class="item">Automated robo-advisor (MPT-based)</div>
+                    <div class="item">11 asset class diversification via ETFs</div>
+                    <div class="item">Personalized portfolio allocation</div>
+                    <div class="item">Continuous automated rebalancing</div>
+                    <div class="item">Daily tax-loss harvesting ($100K+)</div>
+                    <div class="item">Direct Indexing ($500K+)</div>
+                    <div class="item">Single Stock Diversification (SSDS)</div>
+                    <div class="item">Mobile & web apps (iOS, Android)</div>
+                    <div class="item">Goal-based planning tools</div>
+                    <div class="item">Freemium: $25K free + $5K per referral</div>
+                </div>
+
+                <div class="subsection">
+                    <h3><span class="icon">💊</span> Pain Relievers</h3>
+                    <div class="item">Simple 5-10 min onboarding (no jargon) ✅</div>
+                    <div class="item">Radical transparency (exact fees, holdings) ✅</div>
+                    <div class="item">$5K minimum (vs $50K-100K traditional) ✅</div>
+                    <div class="item">SEC-registered RIA + SIPC insured ✅</div>
+                    <div class="item">Automated discipline (no emotional trading) ✅</div>
+                    <div class="item">Complete automation (0 min/week required) ✅</div>
+                    <div class="item">0.25% fee saves $108K over 30 years ✅</div>
+                    <div class="item">Tax-loss harvesting +0.93-1.63% alpha ✅</div>
+                    <div class="item">Diversification reduces concentration risk ✅</div>
+                    <div class="item">Educational content (blog, white papers) ⚠️</div>
+                </div>
+
+                <div class="subsection">
+                    <h3><span class="icon">🚀</span> Gain Creators</h3>
+                    <div class="item">True "set & forget" 24/7 monitoring ✅</div>
+                    <div class="item">Continuous deployment (auto-upgrades) ✅</div>
+                    <div class="item">0.25% fee = 75% savings vs traditional ✅</div>
+                    <div class="item">Freemium enables $0 cost for years ✅</div>
+                    <div class="item">11 asset classes (vs 3 traditional) ✅</div>
+                    <div class="item">Passive indexing + tax alpha = 8-9.6% returns ✅</div>
+                    <div class="item">Native iOS/Android apps ✅</div>
+                    <div class="item">See exact holdings (transparency) ✅</div>
+                    <div class="item">Daily TLH: +0.93% alpha ✅</div>
+                    <div class="item">Direct Indexing: +0.70% additional ✅</div>
+                    <div class="item">Viral referral benefits ($5K per friend) ✅</div>
+                    <div class="item">ESG portfolio options ⚠️</div>
+                    <div class="item">Peer comparison features ❌ GAP</div>
+                    <div class="item">Proactive behavioral coaching ❌ GAP</div>
+                    <div class="item">Holistic financial planning ❌ GAP</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fit Analysis -->
+        <div class="fit-indicator">
+            <h2>📊 Value Proposition Fit Analysis</h2>
+            <p style="color: #666; margin-bottom: 20px;">How well does Wealthfront address customer needs?</p>
+            
+            <div class="fit-bars">
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Low Fees</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 100%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #27ae60;">⭐⭐⭐⭐⭐ Excellent</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Automation</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 100%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #27ae60;">⭐⭐⭐⭐⭐ Excellent</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Tax Optimization</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 100%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #27ae60;">⭐⭐⭐⭐⭐ Excellent</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Low Barriers</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 100%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #27ae60;">⭐⭐⭐⭐⭐ Excellent</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Trust & Security</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 85%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #27ae60;">⭐⭐⭐⭐ Very Good</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Behavioral Coaching</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 50%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #f39c12;">⭐⭐⭐ Moderate (AI Gap)</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">Holistic Planning</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 40%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #b91c1c;">⭐⭐ Weak (AI Gap)</div>
+                </div>
+
+                <div class="fit-bar">
+                    <div class="fit-bar-label">24/7 Support</div>
+                    <div class="fit-bar-progress">
+                        <div class="fit-bar-fill" style="width: 35%;"></div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8em; color: #b91c1c;">⭐⭐ Weak (AI Gap)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #047857;"></div>
+                <span>✅ Strong Fit (Well Addressed)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #d97706;"></div>
+                <span>⚠️ Moderate Fit (Room for AI)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #b91c1c;"></div>
+                <span>❌ Weak Fit (Major AI Opportunity)</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
