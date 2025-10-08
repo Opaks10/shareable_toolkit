@@ -14,7 +14,7 @@ Support de présentation **Financial Innovation**
 ## 🚀 Utilisation
 Ouvre `index.html` dans ton navigateur, ou accède à la version en ligne via GitHub Pages (si activé).
 
-## 🧩 Mise à jour
+## 🧩 Mise à jour (Paco uniquement)
 1. Modifie les fichiers HTML
 2. Commit les changements :
    ```bash
